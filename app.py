@@ -37,6 +37,12 @@ st.markdown("""
         background: linear-gradient(180deg, #0d1117 0%, #161b22 100%);
         border-right: 1px solid rgba(56, 189, 248, 0.15);
     }
+    [data-testid="stSidebar"] label,
+    [data-testid="stSidebar"] p,
+    [data-testid="stSidebar"] span {
+        color: #ffffff !important;
+        font-size: 1rem !important;
+    }
     [data-testid="stSidebar"] h1,
     [data-testid="stSidebar"] h2,
     [data-testid="stSidebar"] h3 {
@@ -589,7 +595,7 @@ def main():
 
         for ax in axes:
             ax.set_facecolor("#1a1a2e")
-            ax.tick_params(colors='#94a3b8', labelsize=7)
+            ax.tick_params(colors='#94a3b8', labelsize=10)
             ax.xaxis.label.set_color('#94a3b8')
             ax.yaxis.label.set_color('#94a3b8')
             for spine in ax.spines.values():
@@ -598,17 +604,17 @@ def main():
         # Track 1: GR
         ax = axes[0]
         ax.plot(gr, depth, color='#22c55e', lw=0.8, label='GR')
-        ax.set_xlabel("GR (API)", fontsize=8)
+        ax.set_xlabel("GR (API)", fontsize=12)
         ax.set_xlim(0, 150)
         ax.axvline(x=gr_clean, color='#22c55e', ls=':', alpha=0.4)
         ax.axvline(x=gr_shale, color='#a16207', ls=':', alpha=0.4)
         ax.fill_betweenx(depth, 0, np.clip(gr, 0, 150), color='#22c55e', alpha=0.12)
-        ax.legend(loc='upper left', fontsize=6, facecolor='#1a1a2e', edgecolor='#334155', labelcolor='#94a3b8')
+        ax.legend(loc='upper left', fontsize=12, facecolor='#1a1a2e', edgecolor='#334155', labelcolor='#94a3b8')
         if has_cal:
             ax_tw = ax.twiny()
             ax_tw.plot(cal, depth, color='#94a3b8', lw=0.5, ls='--', label='CAL')
             ax_tw.set_xlim(6, 16)
-            ax_tw.tick_params(colors='#64748b', labelsize=6)
+            ax_tw.tick_params(colors='#64748b', labelsize=10)
             ax_tw.xaxis.label.set_color('#64748b')
 
         # Track 2: Resistivity
@@ -616,23 +622,23 @@ def main():
         ax.semilogx(rt, depth, color='#ef4444', lw=0.8, label=res_curve)
         if has_rxo:
             ax.semilogx(rxo, depth, color='#3b82f6', lw=0.6, ls=':', label=rxo_curve)
-        ax.set_xlabel("Res (Ω·m)", fontsize=8)
+        ax.set_xlabel("Res (Ω·m)", fontsize=12)
         ax.set_xlim(0.2, 2000)
         ax.grid(True, which='both', ls='-', alpha=0.1, color='#334155')
-        ax.legend(loc='upper right', fontsize=6, facecolor='#1a1a2e', edgecolor='#334155', labelcolor='#94a3b8')
+        ax.legend(loc='upper right', fontsize=12, facecolor='#1a1a2e', edgecolor='#334155', labelcolor='#94a3b8')
 
         # Track 3: Density-Neutron
         ax = axes[2]
         ax.plot(rhob, depth, color='#ef4444', lw=0.8, label='RHOB')
-        ax.set_xlabel("RHOB (g/cc)", fontsize=8)
+        ax.set_xlabel("RHOB (g/cc)", fontsize=12)
         ax.set_xlim(1.95, 2.95)
         ax_tw = ax.twiny()
         ax_tw.plot(df["PHIN"].values, depth, color='#3b82f6', lw=0.8, ls='--', label='NPHI')
-        ax_tw.set_xlabel("NPHI (v/v)", fontsize=8, color='#3b82f6')
+        ax_tw.set_xlabel("NPHI (v/v)", fontsize=12, color='#3b82f6')
         ax_tw.set_xlim(0.45, -0.15)
-        ax_tw.tick_params(colors='#3b82f6', labelsize=6)
-        ax.legend(loc='upper left', fontsize=6, facecolor='#1a1a2e', edgecolor='#334155', labelcolor='#94a3b8')
-        ax_tw.legend(loc='upper right', fontsize=6, facecolor='#1a1a2e', edgecolor='#334155', labelcolor='#94a3b8')
+        ax_tw.tick_params(colors='#3b82f6', labelsize=10)
+        ax.legend(loc='upper left', fontsize=12, facecolor='#1a1a2e', edgecolor='#334155', labelcolor='#94a3b8')
+        ax_tw.legend(loc='upper right', fontsize=12, facecolor='#1a1a2e', edgecolor='#334155', labelcolor='#94a3b8')
 
         # Track 4: Porosity
         ax = axes[3]
@@ -640,9 +646,9 @@ def main():
         ax.plot(df["PHIT"], depth, color='#64748b', lw=0.6, ls='--', label='PHIT')
         if has_dt:
             ax.plot(df["PHIS_W"], depth, color='#f97316', lw=0.5, ls=':', label='PHIS')
-        ax.set_xlabel("Porosity (v/v)", fontsize=8)
+        ax.set_xlabel("Porosity (v/v)", fontsize=12)
         ax.set_xlim(0, 0.40)
-        ax.legend(loc='upper left', fontsize=6, facecolor='#1a1a2e', edgecolor='#334155', labelcolor='#94a3b8')
+        ax.legend(loc='upper left', fontsize=12, facecolor='#1a1a2e', edgecolor='#334155', labelcolor='#94a3b8')
 
         # Track 5: Sw
         ax = axes[4]
@@ -651,31 +657,31 @@ def main():
                          where=(df["SW"].values < 1), color='#22c55e', alpha=0.25, label='HC')
         ax.fill_betweenx(depth, 0, df["SW"].values,
                          where=(df["SW"].values > 0), color='#38bdf8', alpha=0.12, label='Water')
-        ax.set_xlabel("Sw (v/v)", fontsize=8)
+        ax.set_xlabel("Sw (v/v)", fontsize=12)
         ax.set_xlim(0, 1)
-        ax.legend(loc='upper right', fontsize=6, facecolor='#1a1a2e', edgecolor='#334155', labelcolor='#94a3b8')
+        ax.legend(loc='upper right', fontsize=12, facecolor='#1a1a2e', edgecolor='#334155', labelcolor='#94a3b8')
 
         # Track 6: Vsh
         ax = axes[5]
         ax.plot(df["VSH"], depth, color='#a16207', lw=0.8)
         ax.fill_betweenx(depth, 0, df["VSH"].values, color='#854d0e', alpha=0.25)
         ax.axvline(x=vsh_cut, color='#dc2626', ls='--', lw=0.6)
-        ax.set_xlabel("Vsh (v/v)", fontsize=8)
+        ax.set_xlabel("Vsh (v/v)", fontsize=12)
         ax.set_xlim(0, 1)
 
         # Track 7: Permeability
         ax = axes[6]
         ax.semilogx(df["PERM"], depth, color='#a855f7', lw=0.8, label='K')
-        ax.set_xlabel("K (mD)", fontsize=8)
+        ax.set_xlabel("K (mD)", fontsize=12)
         ax.set_xlim(0.01, 10000)
         ax.grid(True, which='both', ls='-', alpha=0.1, color='#334155')
-        ax.legend(loc='upper right', fontsize=6, facecolor='#1a1a2e', edgecolor='#334155', labelcolor='#94a3b8')
+        ax.legend(loc='upper right', fontsize=12, facecolor='#1a1a2e', edgecolor='#334155', labelcolor='#94a3b8')
 
         for ax in axes:
             ax.invert_yaxis()
             ax.grid(True, alpha=0.15, color='#334155')
             ax.tick_params(axis='x', rotation=45)
-        axes[0].set_ylabel("DEPTH (ft)", fontsize=9, color='#94a3b8')
+        axes[0].set_ylabel("DEPTH (ft)", fontsize=12, color='#94a3b8')
 
         # Pay shading
         for ax in axes:
@@ -685,7 +691,7 @@ def main():
                              color='#fbbf24', alpha=0.06)
 
         fig.suptitle(f"Petrophysical Evaluation — {uploaded_file.name}",
-                     fontsize=13, fontweight='bold', color='#38bdf8')
+                     fontsize=20, fontweight='bold', color='#38bdf8')
         plt.tight_layout(rect=[0, 0, 1, 0.97])
         st.pyplot(fig)
         plt.close(fig)
@@ -711,7 +717,7 @@ def main():
                 ax_p.set_xscale('log'); ax_p.set_yscale('log')
                 ax_p.set_xlabel("PHIE (v/v)", color='#94a3b8')
                 ax_p.set_ylabel("Rt (Ω·m)", color='#94a3b8')
-                ax_p.legend(fontsize=7, facecolor='#1a1a2e', edgecolor='#334155', labelcolor='#94a3b8')
+                ax_p.legend(fontsize=12, facecolor='#1a1a2e', edgecolor='#334155', labelcolor='#94a3b8')
                 ax_p.tick_params(colors='#94a3b8')
                 ax_p.grid(True, which='both', alpha=0.1, color='#334155')
                 cb = plt.colorbar(sc, ax=ax_p)
@@ -735,7 +741,7 @@ def main():
                 ax_nd.set_xlabel("NPHI (v/v)", color='#94a3b8')
                 ax_nd.set_ylabel("RHOB (g/cc)", color='#94a3b8')
                 ax_nd.set_xlim(-0.05, 0.50); ax_nd.set_ylim(3.0, 1.8)
-                ax_nd.legend(fontsize=7, facecolor='#1a1a2e', edgecolor='#334155', labelcolor='#94a3b8')
+                ax_nd.legend(fontsize=12, facecolor='#1a1a2e', edgecolor='#334155', labelcolor='#94a3b8')
                 ax_nd.tick_params(colors='#94a3b8')
                 ax_nd.grid(True, alpha=0.1, color='#334155')
                 cb2 = plt.colorbar(sc2, ax=ax_nd)
@@ -788,7 +794,7 @@ def main():
             ax_bv.invert_yaxis()
             ax_bv.tick_params(colors='#94a3b8')
             ax_bv.grid(True, alpha=0.1, color='#334155')
-            ax_bv.legend(fontsize=7, facecolor='#1a1a2e', edgecolor='#334155', labelcolor='#94a3b8')
+            ax_bv.legend(fontsize=12, facecolor='#1a1a2e', edgecolor='#334155', labelcolor='#94a3b8')
             st.pyplot(fig_bv)
             plt.close(fig_bv)
 
@@ -804,8 +810,8 @@ def main():
             for i, ax in enumerate(axes_m):
                 ax.set_facecolor("#1a1a2e")
                 ax.plot(df[cols_m[i]], depth, color=colors_m[i], lw=0.8)
-                ax.set_xlabel(titles_m[i], fontsize=9, color='#94a3b8')
-                ax.tick_params(colors='#94a3b8', labelsize=7)
+                ax.set_xlabel(titles_m[i], fontsize=12, color='#94a3b8')
+                ax.tick_params(colors='#94a3b8', labelsize=10)
                 ax.grid(True, alpha=0.1, color='#334155')
                 ax.invert_yaxis()
                 for spine in ax.spines.values():
